@@ -1,0 +1,9 @@
+import "../../interfaces/Monitor.idl4";
+
+component Producer {
+
+  control;
+  uses Monitor mon;
+
+}
+

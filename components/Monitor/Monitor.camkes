@@ -1,0 +1,9 @@
+import "../../interfaces/Monitor.idl4";
+
+component Monitor {
+
+  provides Monitor mon;
+  emits QueuedData qd;
+
+}
+

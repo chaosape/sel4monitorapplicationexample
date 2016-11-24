@@ -1,0 +1,6 @@
+procedure Monitor {
+  include <stdbool.h>;
+b  include <msgtype.h>;
+  bool enqueue(refin msg_t m);
+  bool dequeue(out msg_t m);
+};

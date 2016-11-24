@@ -1,0 +1,23 @@
+import <std_connector.camkes>;
+
+import "components/Producer/Producer.camkes";
+import "components/Consumer/Consumer.camkes";
+import "components/Monitor/Monitor.camkes";
+
+connector seL4RPCCallDataport {
+ from Procedure client template "seL4RPCCallDataport-from.template.c";
+  to Procedure server template "seL4RPCCallDataport-to.template.c";
+}
+
+assembly {
+  composition {
+    component Producer p;
+    component Consumer c;
+    component Monitor m;
+
+//    connection seL4RPCCallDataport p_to_m (from p.mon, to m.mon);
+//    connection seL4RPCCallDataport c_to_m (from c.mon, to m.mon);
+
+  }
+}
+

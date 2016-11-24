@@ -1,0 +1,11 @@
+import "../../interfaces/Monitor.idl4";
+
+component Consumer {
+
+  control;
+  uses Monitor mon;
+  consumes QueueData qd;
+ 
+
+}
+
