@@ -1,4 +1,5 @@
 TARGETS := $(notdir ${SOURCE_DIR}).cdl
+TEMPLATES := ../../components/templates
 ADL := monitor.camkes
 
 Producer_CFILES := \

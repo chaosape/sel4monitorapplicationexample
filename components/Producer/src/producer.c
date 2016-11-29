@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include <msgtype.h>
 
-int run() {
-  printf("Producer started.\n");
-  return 0;
+void run(void) {
+  msg_t m;
+  m.data = 1;
+  printf("producer:run: sending message %u.\n",m.data);  
+  mon_enqueue(&m);
 }

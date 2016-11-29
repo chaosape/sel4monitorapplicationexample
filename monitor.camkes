@@ -6,7 +6,7 @@ import "components/Monitor/Monitor.camkes";
 
 connector seL4RPCCallDataport {
  from Procedure client template "seL4RPCCallDataport-from.template.c";
-  to Procedure server template "seL4RPCCallDataport-to.template.c";
+ to Procedure server template "seL4RPCCallDataport-to.template.c";
 }
 
 assembly {
@@ -15,9 +15,17 @@ assembly {
     component Consumer c;
     component Monitor m;
 
-//    connection seL4RPCCallDataport p_to_m (from p.mon, to m.mon);
-//    connection seL4RPCCallDataport c_to_m (from c.mon, to m.mon);
+    connection seL4RPCCallDataport ptom_data (from p.mon, to m.mon);
+    connection seL4Notification    mtoc_event (from m.qd, to c.qd);
+    //connection seL4RPCCallDataport c_to_m (from c.mon, to m.mon);
 
   }
+
+    configuration {
+
+		  p.mon_attributes = "11"; 
+     
+    }
+
 }
 
