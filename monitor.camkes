@@ -17,14 +17,14 @@ assembly {
 
     connection seL4RPCCallDataport ptom_data (from p.mon, to m.mon);
     connection seL4Notification    mtoc_event (from m.qd, to c.qd);
-    //connection seL4RPCCallDataport c_to_m (from c.mon, to m.mon);
+    connection seL4RPCCallDataport ctom_data (from c.mon, to m.mon);
 
   }
 
     configuration {
 
 		  p.mon_attributes = "11"; 
-     
+      c.mon_attributes = "12";
     }
 
 }
