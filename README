@@ -8,4 +8,4 @@
  * @TAG(NICTA_BSD)
  */
 
-This is an example of CAmkES RPC connection.
+A concrete example of the way monitor code will be structured within the trusted-build tool.
