@@ -32,7 +32,7 @@ static void qd_handler(void * vpqdcb) {
 
   // The semaphores are counting ones. If we allow this semaphore to
   // increment past one we may end up in a scenario where we dispatch
-  // many times yet there is no work to do. The try wait call bound
+  // many times yet there is no work to do. The trywait call bounds
   // the maximum semaphore count to one. Doing so should restrict
   // vacuous dispatches to no more than one.
   dispatch_sem_trywait();
@@ -55,7 +55,7 @@ int run(void) {
     printf("consumer:run: dispatch initiated.\n");
 
     // Here we are trying to service queues containing more than one
-    // messages fairly within a loop. If we were guaranteed to receive
+    // message fairly within a loop. If we were guaranteed to receive
     // a notification for each message queued this would not be
     // necessary. Unfortunately, there is no such guarantee so we must
     // empty queues once dispatched.
