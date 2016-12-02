@@ -5,10 +5,15 @@
 void run(void) {
   msg_t m;
   m.data = 0;
-//  while(1) {
+  while(m.data<100) {
     m.data++;
-    printf("producer:run: sending message %u.\n",m.data);  
-    mon_enqueue(&m);
-//    sleep(1);
-//  }
+    printf("producer:run: attempting to send message %u ... ",m.data);  
+    if(mon_enqueue(&m)) {
+      printf("successful!\n");  
+    } else {
+      printf("failure!\n");  
+    }
+    int c = 0;
+    for(;c<1000000;c++){}
+  }
 }

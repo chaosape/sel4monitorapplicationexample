@@ -1,12 +1,16 @@
+import <std_connector.camkes>;
 import "../../interfaces/Monitor.idl4";
 
-component Consumer {
 
+component Consumer {
   control;
-  uses Monitor mon;
-  consumes QueueData qd;
-  has semaphore qd_sem;
   has semaphore dispatch_sem;
 
-}
+  uses Monitor mon1;
+  consumes QueueData qd1;
+  has mutex q1work_mut;
 
+  uses Monitor mon2;
+  consumes QueueData qd2;
+  has mutex q2work_mut;
+}

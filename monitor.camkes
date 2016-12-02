@@ -11,20 +11,32 @@ connector seL4RPCCallDataport {
 
 assembly {
   composition {
-    component Producer p;
+    component Producer p1;
+    component Producer p2;
     component Consumer c;
-    component Monitor m;
+    component Monitor m1;
+    component Monitor m2;
 
-    connection seL4RPCCallDataport ptom_data (from p.mon, to m.mon);
-    connection seL4Notification    mtoc_event (from m.qd, to c.qd);
-    connection seL4RPCCallDataport ctom_data (from c.mon, to m.mon);
+    connection seL4RPCCallDataport ptom_data1 (from p1.mon, to m1.mon);
+    connection seL4Notification    mtoc_event1 (from m1.qd, to c.qd1);
+    connection seL4RPCCallDataport ctom_data1 (from c.mon1, to m1.mon);
+
+    connection seL4RPCCallDataport ptom_data2 (from p2.mon, to m2.mon);
+    connection seL4Notification    mtoc_event2 (from m2.qd, to c.qd2);
+    connection seL4RPCCallDataport ctom_data2 (from c.mon2, to m2.mon);
+
 
   }
 
     configuration {
+		  p1.mon_attributes = "11"; 
+		  p2.mon_attributes = "12"; 
+      c.mon1_attributes = "21";
+      c.mon2_attributes = "21";
 
-		  p.mon_attributes = "11"; 
-      c.mon_attributes = "12";
+      // This will cause the initial value of the semaphore counter to
+      // be zero.
+      c.dispatch_sem_value = 0;
     }
 
 }
