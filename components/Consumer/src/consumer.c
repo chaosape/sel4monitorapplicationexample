@@ -2,31 +2,33 @@
 #include <stdio.h>
 #include <msgtype.h>
 #include <stdbool.h>
+// Andrew has suggested that by making the q1work and q2work variables
+// volatile I can remove the need for mutexes.
 
 // Used to determine which QueueEvent initiated the qd_handler
 // callback.
-int qdcb1 = 1;
-int qdcb2 = 2;
+int cb1 = 1;
+int cb2 = 2;
 
 // Used to indicate whether there is a potential for work.
 bool q1work = false;
 bool q2work = false;
 
-static void qd_handler(void * vpqdcb) {
-  int qdcb = *((int*)vpqdcb);
-  printf("consumer:qd_handler: received QueueData(%i) event.\n",qdcb);
-  if(qdcb == 1) {
+static void qd_handler(void * vp) {
+  int cb = *((int*)vp);
+  printf("consumer:qd_handler: received QueueData(%i) event.\n",cb);
+  if(cb == 1) {
     q1work_mut_lock();
     q1work = true;
     q1work_mut_unlock();
-    qd1_reg_callback(&qd_handler, &qdcb1);
-  } else if(qdcb == 2){
+    qd1_reg_callback(&qd_handler, &cb1);
+  } else if(cb == 2){
     q2work_mut_lock();
     q2work = true;
     q2work_mut_unlock();
-    qd2_reg_callback(&qd_handler, &qdcb2);
+    qd2_reg_callback(&qd_handler, &cb2);
   } else {
-    printf("consumer:qd_handler: invalid input qdcb = %i.\n", qdcb);
+    printf("consumer:qd_handler: invalid input cb = %i.\n", cb);
     assert(false);
   }
 
@@ -39,8 +41,8 @@ static void qd_handler(void * vpqdcb) {
   dispatch_sem_post(); }
 
 void pre_init(void) {
-  qd1_reg_callback(&qd_handler, &qdcb1);
-  qd2_reg_callback(&qd_handler, &qdcb2);
+  qd1_reg_callback(&qd_handler, &cb1);
+  qd2_reg_callback(&qd_handler, &cb2);
 }
 
 int run(void) {

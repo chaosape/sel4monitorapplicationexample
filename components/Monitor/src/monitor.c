@@ -36,5 +36,3 @@ bool mon_enqueue(const msg_t * m) {
     return true;
   }
 }
-
-void run(void) {}
