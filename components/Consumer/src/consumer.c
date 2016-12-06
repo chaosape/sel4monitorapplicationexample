@@ -67,20 +67,26 @@ int run(void) {
       work = false;
 
       q1work_mut_lock();
-      if(q1work && mon1_dequeue(&m)) {
+      if(q1work) {
         q1work_mut_unlock();
-        printf("consumer:run: dequeued(1) message %u.\n",m.data);
-        work = true;
+        if(mon1_dequeue(&m)) {
+          // Actual work pertaining to input from monitor 1 goes here.
+          printf("consumer:run: dequeued(1) message %u.\n",m.data);
+          work = true;
+        }
       } else {
         q1work = false;
         q1work_mut_unlock();
       }
 
       q2work_mut_lock();
-      if(q2work && mon2_dequeue(&m)) {
+      if(q2work) {
         q2work_mut_unlock();
-        printf("consumer:run: dequeued(2) message %u.\n",m.data);
-        work = true;
+        if(mon2_dequeue(&m)) {
+          // Actual work pertaining to input from monitor 2 goes here.
+          printf("consumer:run: dequeued(2) message %u.\n",m.data);
+          work = true;
+        }
       } else {
         q2work = false;
         q2work_mut_unlock();
